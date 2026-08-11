@@ -10,6 +10,9 @@ java {
 }
 
 minecraft {
+    // NeoForge 需要 mappings 才能反混淆
+    mappings channel: 'official', version: minecraft_version
+
     accessTransformers {
         file('src/main/resources/META-INF/accesstransformer.cfg')
     }
@@ -17,8 +20,10 @@ minecraft {
 
 repositories {
     mavenCentral()
+    // 如果有其他依赖可以加在这里
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
+    // NeoForge 依赖由 userdev 插件自动添加，无需手动声明
+    // 如果你有其他模组依赖，可以在这里添加
 }
