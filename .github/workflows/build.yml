@@ -17,13 +17,17 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Setup Gradle 8.10
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: 8.10
+      - name: Download Gradle 8.10
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-8.10-bin.zip
+          unzip -q gradle-8.10-bin.zip
+          echo "$(pwd)/gradle-8.10/bin" >> $GITHUB_PATH
+
+      - name: Generate Gradle Wrapper (8.10)
+        run: gradle wrapper --gradle-version 8.10
 
       - name: Build with Gradle
-        run: gradle build --no-daemon
+        run: ./gradlew build --no-daemon
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
