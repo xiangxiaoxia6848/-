@@ -1,21 +1,25 @@
 plugins {
     id 'java-library'
-    id 'net.neoforged.moddev' version '2.0.75'
+    id 'net.neoforged.gradle.userdev' version '7.0.170'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    mavenCentral()
 }
 
-// 可选：如果需要 mapping 和 access transformer
 minecraft {
+    // 使用官方映射
+    mappings channel: 'official', version: minecraft_version
+
+    // 启用 Access Transformer
     accessTransformers {
         file('src/main/resources/META-INF/accesstransformer.cfg')
     }
 }
 
 dependencies {
-    // NeoForge 依赖由 moddev 插件自动提供，无需手动添加
+    // NeoForge 依赖由 userdev 插件自动管理
+    implementation "net.neoforged:neoforge:${neo_version}"
 }
