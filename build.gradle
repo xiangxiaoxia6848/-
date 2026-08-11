@@ -3,27 +3,23 @@ plugins {
     id 'net.neoforged.gradle.userdev' version '7.0.170'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    mavenCentral()
 }
 
 minecraft {
-    // NeoForge 需要 mappings 才能反混淆
+    // 使用官方映射，版本号从 gradle.properties 读取
     mappings channel: 'official', version: minecraft_version
 
+    // 启用 Access Transformer
     accessTransformers {
         file('src/main/resources/META-INF/accesstransformer.cfg')
     }
 }
 
-repositories {
-    mavenCentral()
-    // 如果有其他依赖可以加在这里
-}
-
 dependencies {
-    // NeoForge 依赖由 userdev 插件自动添加，无需手动声明
-    // 如果你有其他模组依赖，可以在这里添加
+    // NeoForge 核心依赖
+    implementation "net.neoforged:neoforge:${neo_version}"
 }
